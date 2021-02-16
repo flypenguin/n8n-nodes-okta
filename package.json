@@ -5,7 +5,7 @@
     "license": "SEE LICENSE IN LICENSE.md",
     "homepage": "https://flypenguin.de",
     "author": {
-        "name": "Jan Oberhauser",
+        "name": "Axel Bock",
         "email": "mr.axel.bock@gmail.com"
     },
     "repository": {
@@ -25,7 +25,8 @@
     ],
     "n8n": {
         "credentials": [
-            "dist/credentials/ExampleCredentials.credentials.js"
+            "dist/credentials/ExampleCredentials.credentials.js",
+            "dist/credentials/OktaApiToken.credentials.js"
         ],
         "nodes": [
             "dist/nodes/ExampleNode/ExampleNode.node.js"
