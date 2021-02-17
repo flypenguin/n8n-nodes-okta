@@ -39,24 +39,19 @@ export async function oktaApiRequest(
         }
 
         //@ts-ignore
-        process.stdout.write("\nCALLING OKTA ... ");
-        console.log(options);
-        console.log("*** body:***");
-        console.log(body);
         let rsp = await this.helpers.request!(options) || {};
+
+        // return the right things
         if (Array.isArray(rsp)) {
-            console.log("result length " + rsp.length + "\n");
             return rsp;
         } else if (rsp == null) {
-            console.log("null returned");
             return [];
         } else if (typeof rsp === 'object') {
-            console.log("single object returned");
             return [rsp];
         } else {
-            console.log("something weird returned:");
-            console.log(rsp);
-            return [];
+            throw new Error(
+                `Okta API: unexpected return value: ${rsp}`
+            );
         }
     } catch (error) {
         if (error.response && error.response.body && error.response.body.error) {

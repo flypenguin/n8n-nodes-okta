@@ -175,13 +175,9 @@ export class OktaApiConsumer implements INodeType {
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-
 		// get input data
 		const items = this.getInputData();
 		const length = items.length;
-
-		console.log("\n# of items: ", length);
-
 
 		// check for method and add query parameters
 		const httpMethod = this.getNodeParameter('httpMethod', 0) as string;
@@ -193,12 +189,10 @@ export class OktaApiConsumer implements INodeType {
 
 		// iterate over input elements
 		for (let i = 0; i < length; i++) {
-			console.log(`-- working item ${i} --`);
 			// we only process json data, not binary data.
 			if (!("json" in items[i])) { continue; }
 
 			const item = items[i]["json"];
-			console.log(item);
 
 			const apiPath = this.getNodeParameter('apiPath', i) as string;
 			const qs: IDataObject = (httpMethod == 'GET')
@@ -222,15 +216,12 @@ export class OktaApiConsumer implements INodeType {
 			}
 
 			// TODO ...
-			if (httpMethod == 'POST' && checkForChanges) {
-				console.log("NOT IMPLEMENTED - OktaApiCall/checkForChanges");
+			if (
+				checkForChanges &&
+				(httpMethod == "POST" || httpMethod == "PUT")
+			) {
+				throw new Error('Okta node: Not implemented: "checkForChanges"');
 			}
-
-			console.log('httpMethod:        ', httpMethod);
-			console.log('checkForChanges:   ', checkForChanges);
-			console.log('disableIdLogic:    ', disableIdLogic);
-			console.log('queryOptions:      ', qs);
-			console.log('apiPath:           ', apiPath);
 
 			let rsp: IDataObject[];
 			rsp = await oktaApiRequest.call(
