@@ -4,7 +4,6 @@ import {
 
 import {
     IExecuteFunctions,
-    ILoadOptionsFunctions,
 } from 'n8n-core';
 
 import {
@@ -14,7 +13,7 @@ import {
 
 
 export async function oktaApiRequest(
-    this: IPollFunctions,
+    this: IPollFunctions | IExecuteFunctions,
     method: string, path: string, body: any = {}, qs: IDataObject = {}, uri?: string | undefined, option = {}
 ): Promise<any> {
 
@@ -40,19 +39,33 @@ export async function oktaApiRequest(
         }
 
         //@ts-ignore
+        process.stdout.write("\nCALLING OKTA ... ");
         console.log(options);
-        process.stdout.write("EXECUTE ... ");
+        console.log("*** body:***");
+        console.log(body);
         let rsp = await this.helpers.request!(options) || {};
-        console.log("result length " + rsp.length);
-        return rsp;
+        if (Array.isArray(rsp)) {
+            console.log("result length " + rsp.length + "\n");
+            return rsp;
+        } else if (rsp == null) {
+            console.log("null returned");
+            return [];
+        } else if (typeof rsp === 'object') {
+            console.log("single object returned");
+            return [rsp];
+        } else {
+            console.log("something weird returned:");
+            console.log(rsp);
+            return [];
+        }
     } catch (error) {
         if (error.response && error.response.body && error.response.body.error) {
-
+            console.log("ERROR: ", error)
             const message = error.response.body.error;
 
             // Try to return the error prettier
             throw new Error(
-                `Pushcut error response [${error.statusCode}]: ${message}`,
+                `Okta API error response [${error.statusCode}]: ${message}`,
             );
         }
         throw error;

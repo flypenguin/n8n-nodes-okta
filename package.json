@@ -29,6 +29,7 @@
             "dist/credentials/OktaApiToken.credentials.js"
         ],
         "nodes": [
+            "dist/nodes/Okta/OktaApiConsumer.node.js",
             "dist/nodes/Okta/OktaEventTrigger.node.js",
             "dist/nodes/Okta/OktaLogTrigger.node.js",
             "dist/nodes/ExampleNode/ExampleNode.node.js"
