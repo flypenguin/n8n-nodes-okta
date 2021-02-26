@@ -6,7 +6,7 @@
 * [x] "do what i want" magic in api consumer
 * [x] polling log trigger
 * [ ] waiting for HTTP 429 in case of timeouts
-* [ ] retrieving _all_ results by using multiple calls (like [for example here](https://github.com/n8n-io/n8n/blob/c811294612d4c2cefaa8544d4b094f075ea90d49/packages/nodes-base/nodes/SendGrid/GenericFunctions.ts#L54))
+* [x] retrieving _all_ results by using multiple calls (like [for example here](https://github.com/n8n-io/n8n/blob/c811294612d4c2cefaa8544d4b094f075ea90d49/packages/nodes-base/nodes/SendGrid/GenericFunctions.ts#L54))
 * [ ] do a couple of blog posts about n8n code internals ("how to do X") which would have saved _me_ ... a couple of hours
 
 ## How to develop nodes in n8n ...
